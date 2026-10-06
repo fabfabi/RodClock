@@ -13,13 +13,32 @@ class TimerLogicTest {
     }
 
     @Test
+    fun elapsedSeconds_shouldFollowTheClock() {
+        assertEquals(0, TimerLogic.elapsedSeconds(5_000L, 5_000L))
+        assertEquals(0, TimerLogic.elapsedSeconds(5_000L, 5_999L))
+        assertEquals(1, TimerLogic.elapsedSeconds(5_000L, 6_000L))
+        assertEquals(90, TimerLogic.elapsedSeconds(5_000L, 95_400L))
+    }
+
+    @Test
+    fun delayToNextSecond_shouldAlignToFullSeconds() {
+        assertEquals(1000L, TimerLogic.delayToNextSecondMs(5_000L, 5_000L))
+        assertEquals(700L, TimerLogic.delayToNextSecondMs(5_000L, 5_300L))
+        assertEquals(1L, TimerLogic.delayToNextSecondMs(5_000L, 7_999L))
+    }
+
+    @Test
     fun backgroundColors_shouldChangeAtExpectedThresholds() {
         assertEquals("#A7F3D0", TimerLogic.backgroundColorFor(0))
+        assertEquals("#A7F3D0", TimerLogic.backgroundColorFor(4))
         assertEquals("#A7F3D0", TimerLogic.backgroundColorFor(9))
         assertEquals("#FACC15", TimerLogic.backgroundColorFor(10))
         assertEquals("#FACC15", TimerLogic.backgroundColorFor(11))
+        assertEquals("#F97316", TimerLogic.backgroundColorFor(14))
         assertEquals("#EF4444", TimerLogic.backgroundColorFor(15))
+        assertEquals("#EF4444", TimerLogic.backgroundColorFor(29))
         assertEquals("#3B82F6", TimerLogic.backgroundColorFor(30))
+        assertEquals("#3B82F6", TimerLogic.backgroundColorFor(89))
         assertEquals("#FFFFFF", TimerLogic.backgroundColorFor(90))
     }
 

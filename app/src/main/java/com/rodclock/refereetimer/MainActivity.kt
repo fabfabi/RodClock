@@ -10,7 +10,9 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.rodclock.refereetimer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -32,13 +34,27 @@ class MainActivity : AppCompatActivity() {
         binding.root.setOnClickListener { resetTimer() }
         binding.resetButton.setOnClickListener { resetTimer() }
 
-        registerReceiver(timerReceiver, IntentFilter(RefereeTimerService.TIMER_UPDATED))
+        ContextCompat.registerReceiver(
+            this,
+            timerReceiver,
+            IntentFilter(RefereeTimerService.TIMER_UPDATED),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
         resetTimer()
     }
 
     override fun onDestroy() {
         unregisterReceiver(timerReceiver)
+        if (isFinishing) stopService(Intent(this, RefereeTimerService::class.java))
         super.onDestroy()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            if (event?.repeatCount == 0) resetTimer()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     private fun resetTimer() {
@@ -46,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             action = RefereeTimerService.ACTION_RESET
         }
 
-        startService(serviceIntent)
+        ContextCompat.startForegroundService(this, serviceIntent)
         triggerResetPattern()
     }
 

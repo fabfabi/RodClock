@@ -7,6 +7,14 @@ object TimerLogic {
         return String.format("%02d:%02d", minutes, remainingSeconds)
     }
 
+    fun elapsedSeconds(startMs: Long, nowMs: Long): Int {
+        return ((nowMs - startMs) / 1000L).toInt()
+    }
+
+    fun delayToNextSecondMs(startMs: Long, nowMs: Long): Long {
+        return 1000L - (nowMs - startMs) % 1000L
+    }
+
     fun backgroundColorFor(seconds: Int): String {
         return when {
             seconds >= 90 -> "#FFFFFF"
