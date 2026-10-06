@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stopwatch on the 108dp adaptive-icon canvas, kept inside the 66dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Crown -->
+    <path
+        android:fillColor="#111827"
+        android:pathData="M48,29h12v6h-12z" />
+    <!-- Dial -->
+    <path
+        android:pathData="M54,38a20,20 0,1 1,0 40a20,20 0,1 1,0 -40z"
+        android:strokeWidth="5"
+        android:strokeColor="#111827" />
+    <!-- Hand -->
+    <path
+        android:pathData="M54,58L54,45"
+        android:strokeLineCap="round"
+        android:strokeWidth="4"
+        android:strokeColor="#111827" />
+    <!-- Hub -->
+    <path
+        android:fillColor="#111827"
+        android:pathData="M54,58m-3.5,0a3.5,3.5 0,1 1,7 0a3.5,3.5 0,1 1,-7 0" />
+</vector>

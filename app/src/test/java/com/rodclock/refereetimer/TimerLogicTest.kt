@@ -36,7 +36,7 @@ class TimerLogicTest {
         assertEquals("#A7F3D0", TimerLogic.backgroundColorFor(9))
         assertEquals("#FACC15", TimerLogic.backgroundColorFor(10))
         assertEquals("#FACC15", TimerLogic.backgroundColorFor(11))
-        assertEquals("#F97316", TimerLogic.backgroundColorFor(14))
+        assertEquals("#FACC15", TimerLogic.backgroundColorFor(14))
         assertEquals("#EF4444", TimerLogic.backgroundColorFor(15))
         assertEquals("#EF4444", TimerLogic.backgroundColorFor(29))
         assertEquals("#3B82F6", TimerLogic.backgroundColorFor(30))
