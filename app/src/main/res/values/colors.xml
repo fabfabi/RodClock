@@ -1,0 +1,8 @@
+<resources>
+    <color name="green_start">#A7F3D0</color>
+    <color name="yellow_signal">#FACC15</color>
+    <color name="orange_signal">#F97316</color>
+    <color name="red_signal">#EF4444</color>
+    <color name="blue_signal">#3B82F6</color>
+    <color name="white_signal">#FFFFFF</color>
+</resources>
