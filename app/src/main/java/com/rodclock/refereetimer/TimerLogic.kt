@@ -32,4 +32,22 @@ object TimerLogic {
     fun shouldTriggerShortSignal(seconds: Int): Boolean {
         return seconds in setOf(8, 9, 13, 14, 28, 29, 88, 89)
     }
+
+    /** Waveform timings (off/on in ms) for the signal at [seconds], or null if none. */
+    fun vibrationPatternFor(seconds: Int): LongArray? {
+        return when {
+            seconds == 15 -> longArrayOf(0L, DOUBLE_PULSE_MS, PULSE_GAP_MS, DOUBLE_PULSE_MS)
+            shouldTriggerLongSignal(seconds) -> longArrayOf(0L, LONG_PULSE_MS)
+            shouldTriggerShortSignal(seconds) -> longArrayOf(0L, SHORT_PULSE_MS)
+            else -> null
+        }
+    }
+
+    const val SHORT_PULSE_MS = 10L
+    const val LONG_PULSE_MS = 450L
+    const val DOUBLE_PULSE_MS = 200L
+    const val PULSE_GAP_MS = 100L
+    const val RESET_GAP_MS = 60L
+
+    val RESET_PATTERN = longArrayOf(0L, SHORT_PULSE_MS, RESET_GAP_MS, SHORT_PULSE_MS, RESET_GAP_MS, SHORT_PULSE_MS)
 }

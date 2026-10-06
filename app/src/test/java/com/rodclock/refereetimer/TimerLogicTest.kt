@@ -1,6 +1,8 @@
 package com.rodclock.refereetimer
 
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 
 class TimerLogicTest {
@@ -51,5 +53,21 @@ class TimerLogicTest {
         assertEquals(true, TimerLogic.shouldTriggerShortSignal(29))
         assertEquals(true, TimerLogic.shouldTriggerLongSignal(90))
         assertEquals(false, TimerLogic.shouldTriggerLongSignal(11))
+    }
+
+    @Test
+    fun vibrationPattern_shouldMatchSignalType() {
+        assertArrayEquals(longArrayOf(0L, 10L), TimerLogic.vibrationPatternFor(8))
+        assertArrayEquals(longArrayOf(0L, 10L), TimerLogic.vibrationPatternFor(89))
+        assertArrayEquals(longArrayOf(0L, 450L), TimerLogic.vibrationPatternFor(10))
+        assertArrayEquals(longArrayOf(0L, 200L, 100L, 200L), TimerLogic.vibrationPatternFor(15))
+        assertArrayEquals(longArrayOf(0L, 450L), TimerLogic.vibrationPatternFor(30))
+        assertArrayEquals(longArrayOf(0L, 450L), TimerLogic.vibrationPatternFor(90))
+        assertNull(TimerLogic.vibrationPatternFor(11))
+    }
+
+    @Test
+    fun resetPattern_shouldBeThreeShortPulses() {
+        assertArrayEquals(longArrayOf(0L, 10L, 60L, 10L, 60L, 10L), TimerLogic.RESET_PATTERN)
     }
 }

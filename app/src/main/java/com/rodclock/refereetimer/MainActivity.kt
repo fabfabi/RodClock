@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun triggerResetPattern() {
-        val pattern = longArrayOf(0L, 80L, 60L, 80L, 60L, 80L)
+        val pattern = TimerLogic.RESET_PATTERN
         val vibrator = getVibrator()
         vibrator?.vibrate(VibrationEffect.createWaveform(pattern, -1))
     }

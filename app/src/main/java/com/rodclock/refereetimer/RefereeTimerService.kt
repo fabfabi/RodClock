@@ -59,13 +59,7 @@ class RefereeTimerService : Service() {
         override fun run() {
             elapsedSeconds = TimerLogic.elapsedSeconds(startRealtimeMs, SystemClock.elapsedRealtime())
 
-            if (TimerLogic.shouldTriggerLongSignal(elapsedSeconds)) {
-                triggerLongVibration()
-            }
-
-            if (TimerLogic.shouldTriggerShortSignal(elapsedSeconds)) {
-                triggerShortVibration()
-            }
+            TimerLogic.vibrationPatternFor(elapsedSeconds)?.let { triggerVibration(it) }
 
             sendTimeUpdate()
             scheduleNextTick()
@@ -120,16 +114,10 @@ class RefereeTimerService : Service() {
         sendBroadcast(intent)
     }
 
-    private fun triggerShortVibration() {
+    private fun triggerVibration(pattern: LongArray) {
         if (!firedSignals.add(elapsedSeconds)) return
         val vibrator = getVibrator()
-        vibrator?.vibrate(VibrationEffect.createOneShot(120L, VibrationEffect.DEFAULT_AMPLITUDE))
-    }
-
-    private fun triggerLongVibration() {
-        if (!firedSignals.add(elapsedSeconds)) return
-        val vibrator = getVibrator()
-        vibrator?.vibrate(VibrationEffect.createOneShot(450L, VibrationEffect.DEFAULT_AMPLITUDE))
+        vibrator?.vibrate(VibrationEffect.createWaveform(pattern, -1))
     }
 
     private fun getVibrator(): Vibrator? {
