@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             action = RefereeTimerService.ACTION_RESET
         }
 
-        ContextCompat.startForegroundService(this, serviceIntent)
+        startService(serviceIntent)
         triggerResetPattern()
     }
 
